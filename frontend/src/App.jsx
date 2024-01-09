@@ -66,7 +66,6 @@ function App() {
             borderRadius="0.5rem"
             borderWidth="0rem"
             overflow="auto"
-            padding="1rem"
           >
             <Lines></Lines>
           </AccordionItem>

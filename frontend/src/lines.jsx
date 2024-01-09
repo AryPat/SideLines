@@ -1,41 +1,119 @@
+/* eslint-disable react/prop-types */
 import {
-  Heading,
   Flex,
-  Accordion,
-  AccordionItem,
-  AccordionPanel,
-  AccordionButton,
-  AccordionIcon,
-  AvatarGroup,
   Avatar,
-  VStack,
   HStack,
   Text,
-  Badge,
-  Box,
   Grid,
   GridItem,
-  Card,
+  Link,
+  useDisclosure,
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from "@chakra-ui/react";
 
-import { useEffect, useState } from "react";
+import { ViewIcon, ExternalLinkIcon, StarIcon } from "@chakra-ui/icons";
 
-example = {
-  id: 1,
+import { useState } from "react";
+
+const example = {
+  id: 15,
   video_title: "SIDEMEN TINDER IN REAL LIFE 2",
   speaker: "KSI",
   speaker_age: 25,
-  speakee: "Lidia",
-  speakee_age: 25,
-  pickup_line:
-    "Today, I dont feel like doing anything, except you, I'd do you",
+  speakee: "Abbie",
+  speakee_age: 24,
+  pickup_line: "You're such a fucking hoe",
   video_link: "https://youtu.be/aAOC71qqXxM?si=iEFwHilNZRhfvOdy",
-  start_time: "0:11",
-  end_time: "0:25",
-  result: "No",
+  start_time: "5:03",
+  end_time: "5:28",
+  result: "Again",
+};
+
+const getSeconds = (time) => {
+  const [minutes, seconds] = time.split(":");
+  return parseInt(minutes) * 60 + parseInt(seconds);
 };
 
 function Lines() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  // startTimeInSeconds.endTimeInSeconds
+  const [time, setTime] = useState("");
+
+  const setVideoTime = (startTime, endTime) => {
+    setTime(getSeconds(startTime) + "." + getSeconds(endTime));
+    onOpen();
+  };
+
+  const PickUpLine = ({ PickUplineInfo, order }) => {
+    return (
+      <GridItem
+        width="100%"
+        borderRadius="0.5rem"
+        backgroundColor="rgb(255, 255, 255, 0.4)"
+        padding="0.4rem"
+        justifyContent="center"
+        cursor="default"
+      >
+        <Flex height="100%" direction="column" justifyContent="space-between">
+          <Flex justifyContent="space-between" padding="0.3rem">
+            <div>#{order}</div>
+            <HStack>
+              <StarIcon cursor="not-allowed"></StarIcon>
+              <ViewIcon
+                onClick={() => {
+                  setVideoTime(
+                    PickUplineInfo["start_time"],
+                    example["end_time"]
+                  );
+                }}
+                cursor="pointer"
+              ></ViewIcon>
+              <Link
+                href={
+                  "https://youtu.be/aAOC71qqXxM?si=YGLpMbd0rY46zq3r&t=" +
+                  getSeconds(PickUplineInfo["start_time"])
+                }
+                isExternal
+              >
+                <ExternalLinkIcon />
+              </Link>
+            </HStack>
+          </Flex>
+          <Flex
+            justifyContent="space-around"
+            padding="0.3rem"
+            alignItems="center"
+          >
+            <Avatar
+              name={PickUplineInfo["speaker"]}
+              src={"https://google.ca"}
+            />
+            <Text fontSize="sm" as="i" width="60%">
+              {PickUplineInfo["pickup_line"]}
+            </Text>
+            <Avatar
+              name={PickUplineInfo["speaker"]}
+              src={"https://google.ca"}
+            />
+          </Flex>
+          <Flex justifyContent="space-between" padding="0.3rem">
+            <div>{PickUplineInfo["video_title"]}</div>
+            <div>
+              {PickUplineInfo["start_time"]} - {PickUplineInfo["end_time"]}
+            </div>
+          </Flex>
+        </Flex>
+      </GridItem>
+    );
+  };
+
   return (
     <Grid
       templateColumns="repeat(2, 1fr)"
@@ -44,16 +122,30 @@ function Lines() {
       width="100%"
       alignContent="flex-start"
     >
-      <GridItem
-        width="100%"
-        height="8rem"
-        borderRadius="0.5rem"
-        backgroundColor="rgb(255, 255, 255, 0.4)"
-        padding="0.4rem"
-        justifyContent="center"
-      >
-        <p>Card 1 Content</p>
-      </GridItem>
+      <PickUpLine PickUplineInfo={example} order="1" />
+
+      <Modal isOpen={isOpen} onClose={onClose} size={"xl"} margins="10rem">
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader></ModalHeader>
+          <ModalBody width="100%" height="100%">
+            <iframe
+              width="100%"
+              height="500px"
+              src={`https://www.youtube.com/embed/aAOC71qqXxM?start=${
+                time.split(".")[0]
+              }&end=${time.split(".")[1]}`}
+              allowFullScreen
+            ></iframe>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Grid>
   );
 }
