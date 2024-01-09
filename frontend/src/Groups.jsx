@@ -15,6 +15,8 @@ import {
   Box,
 } from "@chakra-ui/react";
 
+import { useEffect, useState } from "react";
+
 const members = {
   Sidemen: {
     Vikk: "https://bit.ly/ryan-florence",
@@ -44,6 +46,19 @@ const members = {
 };
 
 function Groups() {
+  const [selected, setSelected] = useState([]);
+
+  const handleSelect = (name) => {
+    // check if select is in selected if so remove it else add it
+    if (selected.includes(name)) {
+      setSelected(selected.filter((item) => item !== name));
+      return;
+    }
+    setSelected([...selected, name]);
+  };
+
+  useEffect(() => {}, [selected]);
+
   return (
     <Flex width="100%" height="100%" direction="column">
       <Heading
@@ -66,9 +81,19 @@ function Groups() {
                   {key[0]}
                 </Heading>
                 <AvatarGroup size="sm">
-                  {Object.entries(members[key[0]]).map(([name, src]) => (
-                    <Avatar key={name} name={name} src={src} />
-                  ))}
+                  {Object.entries(members[key[0]]).map(([name, src]) =>
+                    // if selected includes name then add a border thats hot pink
+                    selected.includes(name) ? (
+                      <Avatar
+                        key={name}
+                        name={name}
+                        src={src}
+                        border="2px solid hotpink"
+                      />
+                    ) : (
+                      <Avatar key={name} name={name} src={src} />
+                    )
+                  )}
                 </AvatarGroup>
                 <AccordionIcon />
               </AccordionButton>
@@ -80,12 +105,18 @@ function Groups() {
                       <Flex
                         key={key[0] + index}
                         width="100%"
+                        // if selected change background color to red
+
                         backgroundColor="rgb(255, 255, 255, 0.4)"
                         padding="0.5rem"
                         borderRadius="0.5rem"
                         justifyContent="center"
+                        borderWidth="1px"
                         _hover={{
                           background: "rgb(255, 255, 255, 0.6)",
+                        }}
+                        onClick={() => {
+                          handleSelect(name);
                         }}
                       >
                         <Flex
@@ -98,7 +129,11 @@ function Groups() {
                             <Text>{name}</Text>
                           </HStack>
 
-                          <Badge colorScheme="blue">Select</Badge>
+                          {selected.includes(name) ? (
+                            <Badge colorScheme="purple">Selected</Badge>
+                          ) : (
+                            <Badge>Select</Badge>
+                          )}
                         </Flex>
                       </Flex>
                     )
