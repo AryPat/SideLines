@@ -67,13 +67,13 @@ function Groups() {
         color="Black"
         width="100%"
         opacity="100"
-        paddingBottom="0.5rem"
+        paddingBottom="1rem"
         textAlign="left"
       >
         The Groups
       </Heading>
       <Box height="100%" overflow="auto">
-        <Accordion allowToggle width="100%">
+        <Accordion allowToggle width="100%" defaultIndex={[0]}>
           {Object.entries(members).map((key) => (
             <AccordionItem key={key[0]}>
               <AccordionButton>
@@ -88,7 +88,7 @@ function Groups() {
                         key={name}
                         name={name}
                         src={src}
-                        border="2px solid hotpink"
+                        border="2px solid #ff5883"
                       />
                     ) : (
                       <Avatar key={name} name={name} src={src} />
@@ -108,12 +108,13 @@ function Groups() {
                         // if selected change background color to red
 
                         backgroundColor="rgb(255, 255, 255, 0.4)"
-                        padding="0.5rem"
+                        padding="0.4rem"
                         borderRadius="0.5rem"
                         justifyContent="center"
                         borderWidth="1px"
                         _hover={{
                           background: "rgb(255, 255, 255, 0.6)",
+                          cursor: "pointer",
                         }}
                         onClick={() => {
                           handleSelect(name);
