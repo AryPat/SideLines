@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 
 import Groups from "./Groups";
+import Lines from "./lines";
 
 function App() {
   return (
@@ -64,7 +65,11 @@ function App() {
             backgroundColor="rgb(255, 255, 255, 0.3)"
             borderRadius="0.5rem"
             borderWidth="0rem"
-          ></AccordionItem>
+            overflow="auto"
+            padding="1rem"
+          >
+            <Lines></Lines>
+          </AccordionItem>
         </Accordion>
       </Flex>
     </Flex>
