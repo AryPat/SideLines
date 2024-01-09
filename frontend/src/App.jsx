@@ -29,8 +29,6 @@ function App() {
           width="30%"
           backgroundColor="rgb(255, 255, 255, 0.3)"
           borderRadius="0.5rem"
-          justify="flex-start"
-          align="flex-start"
           flexDirection="column"
           padding="1rem"
         >
