@@ -1,7 +1,6 @@
 import "./App.css";
 import {
   Flex,
-  VStack,
   Accordion,
   AccordionItem,
   Box,
@@ -10,6 +9,8 @@ import {
   AccordionIcon,
   Spacer,
 } from "@chakra-ui/react";
+
+import Groups from "./Groups";
 
 function App() {
   return (
@@ -23,13 +24,18 @@ function App() {
       justify="center"
     >
       <Flex height="90%" width="70%" justify="space-between">
-        <VStack
+        <Flex
           height="100%"
           width="30%"
-          backgroundColor="white"
-          opacity="0.25"
+          backgroundColor="rgb(255, 255, 255, 0.3)"
           borderRadius="0.5rem"
-        ></VStack>
+          justify="flex-start"
+          align="flex-start"
+          flexDirection="column"
+          padding="1rem"
+        >
+          <Groups></Groups>
+        </Flex>
 
         <Accordion
           height="100%"
@@ -40,9 +46,9 @@ function App() {
           justifyContent="space-between"
         >
           <AccordionItem
-            backgroundColor="white"
-            opacity="0.25"
+            backgroundColor="rgb(255, 255, 255, 0.3)"
             borderRadius="0.5rem"
+            borderWidth="0rem"
           >
             <h2>
               <AccordionButton>
@@ -57,10 +63,9 @@ function App() {
             marginTop="1rem"
             height="100%"
             width="100%"
-            maxH="100vh"
-            backgroundColor="white"
-            opacity="0.25"
+            backgroundColor="rgb(255, 255, 255, 0.3)"
             borderRadius="0.5rem"
+            borderWidth="0rem"
           ></AccordionItem>
         </Accordion>
       </Flex>
