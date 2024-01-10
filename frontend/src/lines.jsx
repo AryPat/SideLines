@@ -92,6 +92,47 @@ const SkeletonLines = () => {
   );
 };
 
+const LineResult = ({ speaker, speakee, pickUpLine, result }) => {
+  let resultColor = "";
+
+  const avatarProp = (name) => {
+    switch (result) {
+      case "Yes":
+        resultColor = "#006400;";
+        break;
+      case "No":
+        resultColor = "#f05959";
+        break;
+      default:
+        resultColor = "grey";
+    }
+
+    return {
+      name: name,
+      src: "https://google.ca",
+      borderColor: resultColor,
+      borderWidth: "3px",
+    };
+  };
+
+  return (
+    <>
+      <Avatar {...avatarProp(speaker)} />
+      <Text
+        fontFamily="Poppins"
+        fontSize="sm"
+        as="i"
+        width="60%"
+        fontWeight="bold"
+        color={resultColor}
+      >
+        &quot;{pickUpLine}&quot;
+      </Text>
+      <Avatar {...avatarProp(speakee)} />
+    </>
+  );
+};
+
 const PickUpLine = ({ PickUplineInfo, order }) => {
   return (
     <GridItem
@@ -104,7 +145,7 @@ const PickUpLine = ({ PickUplineInfo, order }) => {
     >
       <Flex height="100%" direction="column" justifyContent="space-between">
         <Flex justifyContent="space-between" padding="0.3rem">
-          <Text fontFamily="Poppins" fontSize="sm">
+          <Text fontFamily="Poppins" fontSize="sm" as="b">
             #{order}
           </Text>
           <HStack>
@@ -134,23 +175,18 @@ const PickUpLine = ({ PickUplineInfo, order }) => {
           padding="0.3rem"
           alignItems="center"
         >
-          <Avatar name={PickUplineInfo["speaker"]} src={"https://google.ca"} />
-          <Text
-            fontFamily="Poppins"
-            fontSize="sm"
-            as="i"
-            width="60%"
-            fontWeight="bold"
-          >
-            {PickUplineInfo["pickup_line"]}
-          </Text>
-          <Avatar name={PickUplineInfo["speaker"]} src={"https://google.ca"} />
+          <LineResult
+            speaker={PickUplineInfo["speaker"]}
+            speakee={PickUplineInfo["speakee"]}
+            pickUpLine={PickUplineInfo["pickup_line"]}
+            result={PickUplineInfo["result"]}
+          ></LineResult>
         </Flex>
         <Flex justifyContent="space-between" padding="0.3rem">
-          <Text fontFamily="Poppins" as="kbd" fontSize="sm">
+          <Text fontFamily="Poppins" as="kbd" fontSize="sm" fontWeight="500">
             {PickUplineInfo["video_title"]}
           </Text>
-          <Text fontFamily="Poppins" as="em" fontSize="sm">
+          <Text fontFamily="Poppins" as="em" fontSize="sm" fontWeight="500">
             {PickUplineInfo["start_time"]} - {PickUplineInfo["end_time"]}
           </Text>
         </Flex>
