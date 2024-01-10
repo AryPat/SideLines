@@ -15,12 +15,14 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  Box,
 } from "@chakra-ui/react";
 
 import { ViewIcon, ExternalLinkIcon, StarIcon } from "@chakra-ui/icons";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 const getSeconds = (time) => {
   const [minutes, seconds] = time.split(":");
@@ -28,30 +30,6 @@ const getSeconds = (time) => {
 };
 
 function Lines({ selected }) {
-  const [pickUpLines, setPickUpLines] = useState([]);
-
-  useEffect(() => {
-    if (selected) {
-      const getSelectedPeople = async () => {
-        try {
-          const res = await axios.post("http://localhost:3001/lines", {
-            data: { where: { speaker: selected } },
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-          setPickUpLines(res.data.result);
-        } catch (err) {
-          console.log(err);
-        }
-      };
-
-      getSelectedPeople();
-    }
-  }, [selected]);
-
-  useEffect(() => {}, [pickUpLines]);
-
   const Test = ({ PickUplineInfo }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -140,6 +118,31 @@ function Lines({ selected }) {
     );
   };
 
+  const { isFetching, isLoading, error, data, refetch } = useQuery({
+    queryKey: ["pickUpLineData"],
+    queryFn: async () =>
+      await axios.post("http://localhost:3001/lines", {
+        data: { where: { speaker: selected } },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+  });
+
+  useEffect(() => {
+    refetch();
+  }, [selected]);
+
+  if (isLoading || isFetching)
+    return <Box height="100%" width="100%" backgroundColor="green"></Box>;
+  if (error)
+    return (
+      <Box height="100%" width="100%" backgroundColor="red">
+        {" "}
+        Error lol.
+      </Box>
+    );
+
   return (
     <Grid
       templateColumns="repeat(2, 1fr)"
@@ -148,14 +151,7 @@ function Lines({ selected }) {
       width="100%"
       alignContent="flex-start"
     >
-      {pickUpLines.map((line, index) => (
-        <PickUpLine
-          key={index}
-          PickUplineInfo={line}
-          order={index + 1}
-        ></PickUpLine>
-      ))}
-      {pickUpLines.map((line, index) => (
+      {data.data.result.map((line, index) => (
         <PickUpLine
           key={index}
           PickUplineInfo={line}
