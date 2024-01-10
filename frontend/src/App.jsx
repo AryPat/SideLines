@@ -28,6 +28,7 @@ function App() {
           "Content-Type": "application/json",
         },
       }),
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {
