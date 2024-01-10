@@ -12,8 +12,11 @@ import {
 
 import Groups from "./Groups";
 import Lines from "./lines";
+import { useState } from "react";
 
 function App() {
+  const [selected, setSelected] = useState([]);
+
   return (
     <Flex
       height="100vh" // 100% of the viewport height
@@ -33,7 +36,7 @@ function App() {
           flexDirection="column"
           padding="1rem"
         >
-          <Groups></Groups>
+          <Groups selected={selected} setSelected={setSelected}></Groups>
         </Flex>
 
         <Accordion
@@ -68,7 +71,7 @@ function App() {
             overflow="auto"
             padding="1rem"
           >
-            <Lines></Lines>
+            <Lines selected={selected}></Lines>
           </AccordionItem>
         </Accordion>
       </Flex>

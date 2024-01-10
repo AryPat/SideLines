@@ -19,7 +19,8 @@ import {
 
 import { ViewIcon, ExternalLinkIcon, StarIcon } from "@chakra-ui/icons";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const example = {
   id: 15,
@@ -40,16 +41,42 @@ const getSeconds = (time) => {
   return parseInt(minutes) * 60 + parseInt(seconds);
 };
 
-function Lines() {
+function Lines({ selected }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [pickUpLines, setPickUpLines] = useState([]);
 
   // startTimeInSeconds.endTimeInSeconds
   const [time, setTime] = useState("");
 
   const setVideoTime = (startTime, endTime) => {
     setTime(getSeconds(startTime) + "." + getSeconds(endTime));
-    onOpen();
   };
+
+  useEffect(() => {
+    onOpen();
+  }, [time]);
+
+  useEffect(() => {
+    if (selected) {
+      const getSelectedPeople = async () => {
+        try {
+          const res = await axios.post("http://localhost:3001/lines", {
+            data: { where: { speaker: selected } },
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          setPickUpLines(res.data.result);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+
+      getSelectedPeople();
+    }
+  }, [selected]);
+
+  useEffect(() => {}, [pickUpLines]);
 
   const PickUpLine = ({ PickUplineInfo, order }) => {
     return (
@@ -70,7 +97,7 @@ function Lines() {
                 onClick={() => {
                   setVideoTime(
                     PickUplineInfo["start_time"],
-                    example["end_time"]
+                    PickUplineInfo["end_time"]
                   );
                 }}
                 cursor="pointer"
@@ -122,7 +149,13 @@ function Lines() {
       width="100%"
       alignContent="flex-start"
     >
-      <PickUpLine PickUplineInfo={example} order="1" />
+      {pickUpLines.map((line, index) => (
+        <PickUpLine
+          key={index}
+          PickUplineInfo={line}
+          order={index + 1}
+        ></PickUpLine>
+      ))}
 
       <Modal isOpen={isOpen} onClose={onClose} size={"xl"} margins="10rem">
         <ModalOverlay />

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Heading,
   Flex,
@@ -45,9 +46,7 @@ const members = {
   },
 };
 
-function Groups() {
-  const [selected, setSelected] = useState([]);
-
+function Groups({ selected, setSelected }) {
   const handleSelect = (name) => {
     // check if select is in selected if so remove it else add it
     if (selected.includes(name)) {
@@ -56,8 +55,6 @@ function Groups() {
     }
     setSelected([...selected, name]);
   };
-
-  useEffect(() => {}, [selected]);
 
   return (
     <Flex width="100%" height="100%" direction="column">
