@@ -20,9 +20,6 @@ import {
 } from "@chakra-ui/react";
 
 import { ViewIcon, ExternalLinkIcon, StarIcon } from "@chakra-ui/icons";
-import { useEffect } from "react";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
 
 const getSeconds = (time) => {
   const [minutes, seconds] = time.split(":");
@@ -137,22 +134,7 @@ const PickUpLine = ({ PickUplineInfo, order }) => {
   );
 };
 
-function Lines({ selected }) {
-  const { isFetching, isLoading, data, isSuccess, refetch } = useQuery({
-    queryKey: ["pickUpLineData"],
-    queryFn: async () =>
-      await axios.post("http://localhost:3001/lines", {
-        data: { where: { speaker: selected } },
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }),
-  });
-
-  useEffect(() => {
-    refetch();
-  }, [selected]);
-
+function Lines({ isFetching, isLoading, data, isSuccess }) {
   const commonGridProps = {
     templateColumns: "repeat(2, 1fr)",
     gap: 4,
