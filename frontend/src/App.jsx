@@ -13,9 +13,26 @@ import {
 import Groups from "./Groups";
 import Lines from "./lines";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { useEffect } from "react";
 
 function App() {
   const [selected, setSelected] = useState([]);
+  const { isFetching, data, isSuccess, refetch } = useQuery({
+    queryKey: ["pickUpLineData"],
+    queryFn: async () =>
+      await axios.post("http://localhost:3001/lines", {
+        data: { where: { speaker: selected } },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+  });
+
+  useEffect(() => {
+    refetch();
+  }, [selected]);
 
   return (
     <Flex
@@ -36,7 +53,11 @@ function App() {
           flexDirection="column"
           padding="1rem"
         >
-          <Groups selected={selected} setSelected={setSelected}></Groups>
+          <Groups
+            selected={selected}
+            setSelected={setSelected}
+            isFetching={isFetching}
+          ></Groups>
         </Flex>
 
         <Accordion
@@ -71,7 +92,13 @@ function App() {
             overflow="auto"
             padding="1rem"
           >
-            <Lines selected={selected}></Lines>
+            <Lines
+              selected={selected}
+              isFetching={isFetching}
+              data={data}
+              isSuccess={isSuccess}
+              refetch={refetch}
+            ></Lines>
           </AccordionItem>
         </Accordion>
       </Flex>

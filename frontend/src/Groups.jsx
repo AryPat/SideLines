@@ -16,8 +16,6 @@ import {
   Box,
 } from "@chakra-ui/react";
 
-import { useEffect, useState } from "react";
-
 const members = {
   Sidemen: {
     Vikk: "https://bit.ly/ryan-florence",
@@ -46,7 +44,7 @@ const members = {
   },
 };
 
-function Groups({ selected, setSelected }) {
+function Groups({ selected, setSelected, isFetching }) {
   const handleSelect = (name) => {
     // check if select is in selected if so remove it else add it
     if (selected.includes(name)) {
@@ -102,8 +100,6 @@ function Groups({ selected, setSelected }) {
                       <Flex
                         key={key[0] + index}
                         width="100%"
-                        // if selected change background color to red
-
                         backgroundColor="rgb(255, 255, 255, 0.4)"
                         padding="0.4rem"
                         borderRadius="0.5rem"
@@ -111,9 +107,11 @@ function Groups({ selected, setSelected }) {
                         borderWidth="1px"
                         _hover={{
                           background: "rgb(255, 255, 255, 0.6)",
-                          cursor: "pointer",
+                          cursor: isFetching ? "not-allowed" : "pointer",
                         }}
+                        disabled={isFetching}
                         onClick={() => {
+                          if (isFetching) return;
                           handleSelect(name);
                         }}
                       >
