@@ -53,6 +53,9 @@ function App() {
           borderRadius="0.5rem"
           flexDirection="column"
           padding="1rem"
+          boxShadow="dark-lg"
+          borderWidth="1px"
+          borderColor="transparent"
         >
           <Groups
             selected={selected}
@@ -68,11 +71,13 @@ function App() {
           display="flex"
           flexDirection="column"
           justifyContent="space-between"
+          borderColor="transparent"
         >
           <AccordionItem
             backgroundColor="rgb(255, 255, 255, 0.3)"
             borderRadius="0.5rem"
-            borderWidth="0rem"
+            boxShadow="dark-lg"
+            borderWidth="1px"
           >
             <h2>
               <AccordionButton>
@@ -89,9 +94,11 @@ function App() {
             width="100%"
             backgroundColor="rgb(255, 255, 255, 0.3)"
             borderRadius="0.5rem"
-            borderWidth="0rem"
             padding="1rem"
             overflow="auto"
+            boxShadow="dark-lg"
+            borderWidth="1px"
+            borderColor="transparent"
           >
             <Lines
               selected={selected}

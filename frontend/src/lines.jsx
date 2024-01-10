@@ -100,6 +100,7 @@ const PickUpLine = ({ PickUplineInfo, order }) => {
       backgroundColor="rgb(255, 255, 255, 0.4)"
       padding="0.3rem"
       justifyContent="center"
+      boxShadow="base"
     >
       <Flex height="100%" direction="column" justifyContent="space-between">
         <Flex justifyContent="space-between" padding="0.3rem">

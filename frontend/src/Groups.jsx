@@ -90,6 +90,7 @@ function Groups({ selected, setSelected, isFetching }) {
                   background: "rgb(255, 255, 255, 0.6)",
                 }}
                 marginBottom="1rem"
+                boxShadow="base"
               >
                 <Heading
                   fontSize="md"
@@ -140,6 +141,7 @@ function Groups({ selected, setSelected, isFetching }) {
                           if (isFetching) return;
                           handleSelect(name);
                         }}
+                        boxShadow="base"
                       >
                         <Flex
                           width="90%"
