@@ -56,7 +56,7 @@ function Groups({ selected, setSelected, isFetching }) {
   };
 
   return (
-    <Flex width="100%" height="100%" direction="column">
+    <Flex width="100%" height="100%" direction="column" fontFamily="Poppins">
       <Heading
         fontSize="20px"
         as="b"
@@ -91,7 +91,13 @@ function Groups({ selected, setSelected, isFetching }) {
                 }}
                 marginBottom="1rem"
               >
-                <Heading fontSize="md" as="i" flex="1" textAlign="left">
+                <Heading
+                  fontSize="md"
+                  as="i"
+                  flex="1"
+                  textAlign="left"
+                  fontFamily="Poppins"
+                >
                   {key[0]}
                 </Heading>
                 <AvatarGroup size="sm">
@@ -142,7 +148,7 @@ function Groups({ selected, setSelected, isFetching }) {
                         >
                           <HStack>
                             <Avatar name={name} src={src} />
-                            <Text>{name}</Text>
+                            <Text fontFamily="Poppins">{name}</Text>
                           </HStack>
 
                           {selected.includes(name) ? (

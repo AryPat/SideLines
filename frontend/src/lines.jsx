@@ -103,7 +103,9 @@ const PickUpLine = ({ PickUplineInfo, order }) => {
     >
       <Flex height="100%" direction="column" justifyContent="space-between">
         <Flex justifyContent="space-between" padding="0.3rem">
-          <div>#{order}</div>
+          <Text fontFamily="Poppins" fontSize="sm">
+            #{order}
+          </Text>
           <HStack>
             <StarIcon
               cursor="not-allowed"
@@ -132,16 +134,24 @@ const PickUpLine = ({ PickUplineInfo, order }) => {
           alignItems="center"
         >
           <Avatar name={PickUplineInfo["speaker"]} src={"https://google.ca"} />
-          <Text fontSize="sm" as="i" width="60%">
+          <Text
+            fontFamily="Poppins"
+            fontSize="sm"
+            as="i"
+            width="60%"
+            fontWeight="bold"
+          >
             {PickUplineInfo["pickup_line"]}
           </Text>
           <Avatar name={PickUplineInfo["speaker"]} src={"https://google.ca"} />
         </Flex>
         <Flex justifyContent="space-between" padding="0.3rem">
-          <div>{PickUplineInfo["video_title"]}</div>
-          <div>
+          <Text fontFamily="Poppins" as="kbd" fontSize="sm">
+            {PickUplineInfo["video_title"]}
+          </Text>
+          <Text fontFamily="Poppins" as="em" fontSize="sm">
             {PickUplineInfo["start_time"]} - {PickUplineInfo["end_time"]}
-          </div>
+          </Text>
         </Flex>
       </Flex>
     </GridItem>
