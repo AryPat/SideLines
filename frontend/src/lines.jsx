@@ -138,17 +138,16 @@ const PickUpLine = ({ PickUplineInfo, order }) => {
 };
 
 function Lines({ selected }) {
-  const { isFetching, isLoading, isRefetchError, error, data, refetch } =
-    useQuery({
-      queryKey: ["pickUpLineData"],
-      queryFn: async () =>
-        await axios.post("http://localhost:3001/lines", {
-          data: { where: { speaker: selected } },
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }),
-    });
+  const { isFetching, isLoading, data, isSuccess, refetch } = useQuery({
+    queryKey: ["pickUpLineData"],
+    queryFn: async () =>
+      await axios.post("http://localhost:3001/lines", {
+        data: { where: { speaker: selected } },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+  });
 
   useEffect(() => {
     refetch();
@@ -162,7 +161,7 @@ function Lines({ selected }) {
     alignContent: "flex-start",
   };
 
-  if (isLoading || isFetching || error || isRefetchError) {
+  if (!isSuccess || isLoading || isFetching) {
     return (
       <Grid {...commonGridProps}>
         <SkeletonLines />
