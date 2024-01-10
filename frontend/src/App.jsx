@@ -92,17 +92,6 @@ function App() {
             borderWidth="0rem"
             padding="1rem"
             overflow="auto"
-            sx={{
-              "&::-webkit-scrollbar": {
-                width: "12px",
-              },
-              "&::-webkit-scrollbar-thumb": {
-                backgroundColor: "transparent",
-              },
-              "&::-webkit-scrollbar-track": {
-                backgroundColor: "transparent",
-              },
-            }}
           >
             <Lines
               selected={selected}

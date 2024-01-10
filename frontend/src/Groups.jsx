@@ -14,6 +14,7 @@ import {
   Text,
   Badge,
   Box,
+  Divider,
 } from "@chakra-ui/react";
 
 const members = {
@@ -67,11 +68,29 @@ function Groups({ selected, setSelected, isFetching }) {
       >
         The Groups
       </Heading>
+      <Divider
+        orientation="horizontal"
+        marginBottom="1rem"
+        border="1px solid"
+        color="black"
+      />
       <Box height="100%" overflow="auto">
-        <Accordion allowToggle width="100%" defaultIndex={[0]}>
+        <Accordion
+          allowToggle
+          width="100%"
+          defaultIndex={[0]}
+          borderColor="transparent"
+        >
           {Object.entries(members).map((key) => (
             <AccordionItem key={key[0]}>
-              <AccordionButton>
+              <AccordionButton
+                background="rgb(255, 255, 255, 0.4)"
+                _hover={{
+                  borderColor: "transparent",
+                  background: "rgb(255, 255, 255, 0.6)",
+                }}
+                marginBottom="1rem"
+              >
                 <Heading fontSize="md" as="i" flex="1" textAlign="left">
                   {key[0]}
                 </Heading>
@@ -105,6 +124,7 @@ function Groups({ selected, setSelected, isFetching }) {
                         borderRadius="0.5rem"
                         justifyContent="center"
                         borderWidth="1px"
+                        borderColor="transparent"
                         _hover={{
                           background: "rgb(255, 255, 255, 0.6)",
                           cursor: isFetching ? "not-allowed" : "pointer",
