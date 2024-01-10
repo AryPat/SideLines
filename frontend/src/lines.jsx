@@ -17,6 +17,7 @@ import {
   ModalFooter,
   SkeletonCircle,
   SkeletonText,
+  Box,
 } from "@chakra-ui/react";
 
 import { ViewIcon, ExternalLinkIcon, StarIcon } from "@chakra-ui/icons";
@@ -31,7 +32,13 @@ const YoutubeModel = ({ PickUplineInfo }) => {
 
   return (
     <>
-      <ViewIcon onClick={onOpen} cursor="pointer"></ViewIcon>
+      <ViewIcon
+        onClick={onOpen}
+        cursor="pointer"
+        _hover={{
+          color: "blue.500",
+        }}
+      ></ViewIcon>
 
       <Modal isOpen={isOpen} onClose={onClose} size={"xl"} margins="10rem">
         <ModalOverlay />
@@ -91,15 +98,19 @@ const PickUpLine = ({ PickUplineInfo, order }) => {
       width="100%"
       borderRadius="0.5rem"
       backgroundColor="rgb(255, 255, 255, 0.4)"
-      padding="0.4rem"
+      padding="0.3rem"
       justifyContent="center"
-      cursor="default"
     >
       <Flex height="100%" direction="column" justifyContent="space-between">
         <Flex justifyContent="space-between" padding="0.3rem">
           <div>#{order}</div>
           <HStack>
-            <StarIcon cursor="not-allowed"></StarIcon>
+            <StarIcon
+              cursor="not-allowed"
+              _hover={{
+                color: "yellow.600",
+              }}
+            ></StarIcon>
             <YoutubeModel PickUplineInfo={PickUplineInfo} />
             <Link
               href={
@@ -107,6 +118,9 @@ const PickUpLine = ({ PickUplineInfo, order }) => {
                 getSeconds(PickUplineInfo["start_time"])
               }
               isExternal
+              _hover={{
+                color: "blue.500",
+              }}
             >
               <ExternalLinkIcon />
             </Link>
@@ -154,15 +168,17 @@ function Lines({ isFetching, isLoading, data, isSuccess }) {
   }
 
   return (
-    <Grid {...commonGridProps}>
-      {data.data.result.map((line, index) => (
-        <PickUpLine
-          key={index}
-          PickUplineInfo={line}
-          order={index + 1}
-        ></PickUpLine>
-      ))}
-    </Grid>
+    <Box>
+      <Grid {...commonGridProps}>
+        {data.data.result.map((line, index) => (
+          <PickUpLine
+            key={index}
+            PickUplineInfo={line}
+            order={index + 1}
+          ></PickUpLine>
+        ))}
+      </Grid>
+    </Box>
   );
 }
 
