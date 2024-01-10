@@ -22,39 +22,13 @@ import { ViewIcon, ExternalLinkIcon, StarIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const example = {
-  id: 15,
-  video_title: "SIDEMEN TINDER IN REAL LIFE 2",
-  speaker: "KSI",
-  speaker_age: 25,
-  speakee: "Abbie",
-  speakee_age: 24,
-  pickup_line: "You're such a fucking hoe",
-  video_link: "https://youtu.be/aAOC71qqXxM?si=iEFwHilNZRhfvOdy",
-  start_time: "5:03",
-  end_time: "5:28",
-  result: "Again",
-};
-
 const getSeconds = (time) => {
   const [minutes, seconds] = time.split(":");
   return parseInt(minutes) * 60 + parseInt(seconds);
 };
 
 function Lines({ selected }) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const [pickUpLines, setPickUpLines] = useState([]);
-
-  // startTimeInSeconds.endTimeInSeconds
-  const [time, setTime] = useState("");
-
-  const setVideoTime = (startTime, endTime) => {
-    setTime(getSeconds(startTime) + "." + getSeconds(endTime));
-  };
-
-  useEffect(() => {
-    onOpen();
-  }, [time]);
 
   useEffect(() => {
     if (selected) {
@@ -78,6 +52,41 @@ function Lines({ selected }) {
 
   useEffect(() => {}, [pickUpLines]);
 
+  const Test = ({ PickUplineInfo }) => {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
+    return (
+      <>
+        <ViewIcon onClick={onOpen} cursor="pointer"></ViewIcon>
+
+        <Modal isOpen={isOpen} onClose={onClose} size={"xl"} margins="10rem">
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>
+              Hello {PickUplineInfo["start_time"]} {PickUplineInfo["end_time"]}
+            </ModalHeader>
+            <ModalBody width="100%" height="100%">
+              <iframe
+                width="100%"
+                height="500px"
+                src={`https://www.youtube.com/embed/aAOC71qqXxM?start=${getSeconds(
+                  PickUplineInfo["start_time"]
+                )}&end=${getSeconds(PickUplineInfo["end_time"])}`}
+                allowFullScreen
+              ></iframe>
+            </ModalBody>
+
+            <ModalFooter>
+              <Button colorScheme="blue" mr={3} onClick={onClose}>
+                Close
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      </>
+    );
+  };
+
   const PickUpLine = ({ PickUplineInfo, order }) => {
     return (
       <GridItem
@@ -93,15 +102,7 @@ function Lines({ selected }) {
             <div>#{order}</div>
             <HStack>
               <StarIcon cursor="not-allowed"></StarIcon>
-              <ViewIcon
-                onClick={() => {
-                  setVideoTime(
-                    PickUplineInfo["start_time"],
-                    PickUplineInfo["end_time"]
-                  );
-                }}
-                cursor="pointer"
-              ></ViewIcon>
+              <Test PickUplineInfo={PickUplineInfo}></Test>
               <Link
                 href={
                   "https://youtu.be/aAOC71qqXxM?si=YGLpMbd0rY46zq3r&t=" +
@@ -156,29 +157,13 @@ function Lines({ selected }) {
           order={index + 1}
         ></PickUpLine>
       ))}
-
-      <Modal isOpen={isOpen} onClose={onClose} size={"xl"} margins="10rem">
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader></ModalHeader>
-          <ModalBody width="100%" height="100%">
-            <iframe
-              width="100%"
-              height="500px"
-              src={`https://www.youtube.com/embed/aAOC71qqXxM?start=${
-                time.split(".")[0]
-              }&end=${time.split(".")[1]}`}
-              allowFullScreen
-            ></iframe>
-          </ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      {pickUpLines.map((line, index) => (
+        <PickUpLine
+          key={index}
+          PickUplineInfo={line}
+          order={index + 1}
+        ></PickUpLine>
+      ))}
     </Grid>
   );
 }
