@@ -62,9 +62,7 @@ function Lines({ selected }) {
         <Modal isOpen={isOpen} onClose={onClose} size={"xl"} margins="10rem">
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>
-              Hello {PickUplineInfo["start_time"]} {PickUplineInfo["end_time"]}
-            </ModalHeader>
+            <ModalHeader></ModalHeader>
             <ModalBody width="100%" height="100%">
               <iframe
                 width="100%"
