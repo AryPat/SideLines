@@ -23,10 +23,8 @@ import {
   PopoverContent,
   PopoverHeader,
   PopoverArrow,
-  PopoverCloseButton,
   PopoverBody,
   Spacer,
-  Center,
 } from "@chakra-ui/react";
 
 import { ViewIcon, ExternalLinkIcon, StarIcon } from "@chakra-ui/icons";
