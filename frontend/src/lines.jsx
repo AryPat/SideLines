@@ -18,6 +18,15 @@ import {
   SkeletonCircle,
   SkeletonText,
   Box,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverBody,
+  Spacer,
+  Center,
 } from "@chakra-ui/react";
 
 import { ViewIcon, ExternalLinkIcon, StarIcon } from "@chakra-ui/icons";
@@ -92,6 +101,49 @@ const SkeletonLines = () => {
   );
 };
 
+const AvatarPopOver = ({ name, avatarProp }) => {
+  return (
+    <Popover placement="right-start">
+      <PopoverTrigger>
+        <Avatar
+          {...avatarProp(name)}
+          _hover={{
+            cursor: "pointer",
+          }}
+          userSelect="none"
+        ></Avatar>
+      </PopoverTrigger>
+      <PopoverContent>
+        <PopoverHeader>
+          <Flex flex="1">
+            <Text fontFamily="Poppins" fontSize="sm" as="b">
+              {name}, 25
+            </Text>
+            <Spacer></Spacer>
+            <Text fontFamily="Poppins" fontSize="sm" as="b">
+              Stoke
+            </Text>
+          </Flex>
+        </PopoverHeader>
+        <PopoverArrow />
+        <PopoverBody>
+          <HStack justify="center" align="center">
+            <Avatar size="sm" src="./src/assets/insta.png"></Avatar>
+            <Link
+              href={"https://youtu.be/aAOC71qqXxM?si=YGLpMbd0rY46zq3r&t="}
+              isExternal
+            >
+              <Text fontFamily="Poppins" fontSize="sm" as="b">
+                @insta_name
+              </Text>
+            </Link>
+          </HStack>
+        </PopoverBody>
+      </PopoverContent>
+    </Popover>
+  );
+};
+
 const LineResult = ({ speaker, speakee, pickUpLine, result }) => {
   let resultColor = "";
 
@@ -128,7 +180,7 @@ const LineResult = ({ speaker, speakee, pickUpLine, result }) => {
       >
         &quot;{pickUpLine}&quot;
       </Text>
-      <Avatar {...avatarProp(speakee)} />
+      <AvatarPopOver name={speakee} avatarProp={avatarProp} />
     </>
   );
 };
