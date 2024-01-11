@@ -1,5 +1,14 @@
 import "./App.css";
-import { Flex, Accordion, AccordionItem, Spacer } from "@chakra-ui/react";
+import {
+  Flex,
+  Accordion,
+  AccordionItem,
+  Box,
+  AccordionPanel,
+  AccordionButton,
+  AccordionIcon,
+  Spacer,
+} from "@chakra-ui/react";
 
 import Groups from "./Groups";
 import Lines from "./lines";
@@ -7,7 +16,6 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect } from "react";
-import Filter from "./filter";
 
 function App() {
   const [selected, setSelected] = useState([]);
@@ -42,8 +50,7 @@ function App() {
           height="100%"
           width="30%"
           backgroundColor="rgb(255, 255, 255, 0.3)"
-          borderTopRightRadius="0.5rem"
-          borderBottomRightRadius="0.5rem"
+          borderRadius="0.5rem"
           flexDirection="column"
           padding="1rem"
           boxShadow="dark-lg"
@@ -68,12 +75,17 @@ function App() {
         >
           <AccordionItem
             backgroundColor="rgb(255, 255, 255, 0.3)"
-            borderTopLeftRadius="0.5rem"
-            borderBottomLeftRadius="0.5rem"
+            borderRadius="0.5rem"
             boxShadow="dark-lg"
             borderWidth="1px"
           >
-            <Filter />
+            <h2>
+              <AccordionButton>
+                <Box></Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel>Filter option goes here.</AccordionPanel>
           </AccordionItem>
           <Spacer></Spacer>
           <AccordionItem

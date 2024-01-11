@@ -57,17 +57,17 @@ function Groups({ selected, setSelected, isFetching }) {
 
   return (
     <Flex width="100%" height="100%" direction="column" fontFamily="Poppins">
-      <Text
+      <Heading
+        fontSize="20px"
         as="b"
         color="Black"
         width="100%"
         opacity="100"
         paddingBottom="1rem"
         textAlign="left"
-        fontSize="lg"
       >
         The Groups
-      </Text>
+      </Heading>
       <Divider
         orientation="horizontal"
         marginBottom="1rem"
