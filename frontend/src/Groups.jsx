@@ -14,6 +14,7 @@ import {
   Text,
   Badge,
   Box,
+  Divider,
 } from "@chakra-ui/react";
 
 const members = {
@@ -55,7 +56,7 @@ function Groups({ selected, setSelected, isFetching }) {
   };
 
   return (
-    <Flex width="100%" height="100%" direction="column">
+    <Flex width="100%" height="100%" direction="column" fontFamily="Poppins">
       <Heading
         fontSize="20px"
         as="b"
@@ -67,12 +68,37 @@ function Groups({ selected, setSelected, isFetching }) {
       >
         The Groups
       </Heading>
+      <Divider
+        orientation="horizontal"
+        marginBottom="1rem"
+        border="1px solid"
+        color="black"
+      />
       <Box height="100%" overflow="auto">
-        <Accordion allowToggle width="100%" defaultIndex={[0]}>
+        <Accordion
+          allowToggle
+          width="100%"
+          defaultIndex={[0]}
+          borderColor="transparent"
+        >
           {Object.entries(members).map((key) => (
             <AccordionItem key={key[0]}>
-              <AccordionButton>
-                <Heading fontSize="md" as="i" flex="1" textAlign="left">
+              <AccordionButton
+                background="rgb(255, 255, 255, 0.4)"
+                _hover={{
+                  borderColor: "transparent",
+                  background: "rgb(255, 255, 255, 0.6)",
+                }}
+                marginBottom="1rem"
+                boxShadow="base"
+              >
+                <Heading
+                  fontSize="md"
+                  as="i"
+                  flex="1"
+                  textAlign="left"
+                  fontFamily="Poppins"
+                >
                   {key[0]}
                 </Heading>
                 <AvatarGroup size="sm">
@@ -105,6 +131,7 @@ function Groups({ selected, setSelected, isFetching }) {
                         borderRadius="0.5rem"
                         justifyContent="center"
                         borderWidth="1px"
+                        borderColor="transparent"
                         _hover={{
                           background: "rgb(255, 255, 255, 0.6)",
                           cursor: isFetching ? "not-allowed" : "pointer",
@@ -114,6 +141,7 @@ function Groups({ selected, setSelected, isFetching }) {
                           if (isFetching) return;
                           handleSelect(name);
                         }}
+                        boxShadow="base"
                       >
                         <Flex
                           width="90%"
@@ -122,7 +150,7 @@ function Groups({ selected, setSelected, isFetching }) {
                         >
                           <HStack>
                             <Avatar name={name} src={src} />
-                            <Text>{name}</Text>
+                            <Text fontFamily="Poppins">{name}</Text>
                           </HStack>
 
                           {selected.includes(name) ? (
