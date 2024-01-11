@@ -25,6 +25,8 @@ import {
   PopoverArrow,
   PopoverBody,
   Spacer,
+  Center,
+  VStack,
 } from "@chakra-ui/react";
 
 import { ViewIcon, ExternalLinkIcon, StarIcon } from "@chakra-ui/icons";
@@ -111,8 +113,15 @@ const AvatarPopOver = ({ name, avatarProp }) => {
           userSelect="none"
         ></Avatar>
       </PopoverTrigger>
-      <PopoverContent>
-        <PopoverHeader>
+      <PopoverContent
+        borderTopLeftRadius="0.5rem"
+        borderTopRightRadius="0.5rem"
+      >
+        <PopoverHeader
+          backgroundColor="#ececec"
+          borderTopLeftRadius="0.5rem"
+          borderTopRightRadius="0.5rem"
+        >
           <Flex flex="1">
             <Text fontFamily="Poppins" fontSize="sm" as="b">
               {name}, 25
@@ -261,6 +270,20 @@ function Lines({ isFetching, isLoading, data, isSuccess }) {
         <SkeletonLines />
         <SkeletonLines />
       </Grid>
+    );
+  }
+
+  if (data.data.result.length === 0) {
+    return (
+      <Center height="100%">
+        <VStack>
+          <img width="50%" src="./src/assets/looking-around2.gif" />
+          <Text fontFamily="Poppins" fontSize="lg">
+            {" "}
+            Where da pickup lines at?
+          </Text>
+        </VStack>
+      </Center>
     );
   }
 
