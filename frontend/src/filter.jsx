@@ -14,6 +14,9 @@ function Filter() {
         _hover={{
           borderColor: "transparent",
           background: "rgb(255, 255, 255, 0.4)",
+          borderRadius: "0rem",
+          borderTopLeftRadius: "0.5rem",
+          borderBottomLeftRadius: "0.5rem",
         }}
       >
         <Flex
