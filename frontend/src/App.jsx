@@ -1,5 +1,5 @@
 import "./App.css";
-import { Flex, Accordion, AccordionItem, Spacer } from "@chakra-ui/react";
+import { Flex, Accordion, AccordionItem } from "@chakra-ui/react";
 
 import Groups from "./Groups";
 import Lines from "./lines";
@@ -8,24 +8,70 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect } from "react";
 import Filter from "./filter";
+import Pagination from "./pagination";
+
+const paginate = (query, { page, pageSize }) => {
+  const offset = page * pageSize;
+  const limit = pageSize;
+
+  return {
+    ...query,
+    offset,
+    limit,
+  };
+};
 
 function App() {
   const [selected, setSelected] = useState([]);
+
+  const [pageIndex, setPageIndex] = useState(0);
+  const [maxPage, setMaxPage] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const [canPreviousPage, setCanPreviousPage] = useState(true);
+  const [canNextPage, setCanNextPage] = useState(true);
+
   const { isFetching, data, isSuccess, refetch } = useQuery({
     queryKey: ["pickUpLineData"],
-    queryFn: async () =>
-      await axios.post("http://localhost:3001/lines", {
+    queryFn: async () => {
+      const { data } = await axios.post("http://localhost:3001/lines/count", {
         data: { where: { speaker: selected } },
         headers: {
           "Content-Type": "application/json",
         },
-      }),
+      });
+
+      const res = await axios.post("http://localhost:3001/lines", {
+        data: paginate(
+          { where: { speaker: selected } },
+          { page: pageIndex, pageSize: pageSize }
+        ),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      setMaxPage(Math.ceil(data.count / pageSize));
+      setCanPreviousPage(pageIndex > 0);
+      setCanNextPage(pageIndex < Math.ceil(data.count / pageSize) - 1);
+
+      return { data: res.data, total_count: data.count };
+    },
     refetchOnWindowFocus: false,
   });
 
   useEffect(() => {
+    setPageIndex(0);
     refetch();
   }, [selected]);
+
+  useEffect(() => {
+    refetch();
+  }, [pageIndex]);
+
+  useEffect(() => {
+    setPageIndex(0);
+    refetch();
+  }, [pageSize]);
 
   return (
     <Flex
@@ -75,7 +121,7 @@ function App() {
           >
             <Filter />
           </AccordionItem>
-          <Spacer></Spacer>
+
           <AccordionItem
             marginTop="1rem"
             height="100%"
@@ -96,6 +142,17 @@ function App() {
               refetch={refetch}
             ></Lines>
           </AccordionItem>
+
+          <Pagination
+            pageIndex={pageIndex}
+            maxPage={maxPage}
+            pageSize={pageSize}
+            canPreviousPage={canPreviousPage}
+            canNextPage={canNextPage}
+            setPageIndex={setPageIndex}
+            setPageSize={setPageSize}
+            isFetching={isFetching}
+          />
         </Accordion>
       </Flex>
     </Flex>

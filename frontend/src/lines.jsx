@@ -205,7 +205,7 @@ const PickUpLine = ({ PickUplineInfo, order }) => {
       <Flex height="100%" direction="column" justifyContent="space-between">
         <Flex justifyContent="space-between" padding="0.3rem">
           <Text fontFamily="Poppins" fontSize="sm" as="b">
-            #{order}
+            #{PickUplineInfo["id"]}
           </Text>
           <HStack>
             <StarIcon
