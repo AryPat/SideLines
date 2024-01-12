@@ -44,3 +44,28 @@ app.post("/lines", async (req, res) => {
     });
   }
 });
+
+/*
+ Get the count of the database of a query
+*/
+app.post("/lines/count", async (req, res) => {
+  if (!check_json_req(req, res) || !json_validation(req.body.data, res)) {
+    return false;
+  }
+
+  try {
+    data = req.body.data
+      ? await Line.count(req.body.data)
+      : await Line.count();
+
+    console.log(data);
+
+    res.status(200).json({
+      count: data,
+    });
+  } catch (err) {
+    res.status(500).json({
+      error: err,
+    });
+  }
+});
