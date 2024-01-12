@@ -1,41 +1,5 @@
 /* eslint-disable react/prop-types */
-import {
-  Flex,
-  Avatar,
-  HStack,
-  Text,
-  Grid,
-  GridItem,
-  Link,
-  useDisclosure,
-  Button,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  SkeletonCircle,
-  SkeletonText,
-  Box,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverArrow,
-  PopoverBody,
-  Center,
-  VStack,
-  Spacer,
-  Tooltip,
-  IconButton,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-  Select,
-} from "@chakra-ui/react";
+import { Flex, Text, Tooltip, IconButton, Select } from "@chakra-ui/react";
 
 import {
   ArrowLeftIcon,
@@ -43,13 +7,6 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
-
-import { ViewIcon, ExternalLinkIcon, StarIcon } from "@chakra-ui/icons";
-import { useState } from "react";
-
-const goToPage = (pageNum) => {
-  return;
-};
 
 function Pagination({
   pageIndex,
@@ -61,9 +18,7 @@ function Pagination({
   setPageSize,
   isFetching,
 }) {
-  if (pageIndex == maxPage) {
-    return <></>;
-  }
+  if (pageIndex == maxPage) return <></>;
 
   return (
     <Flex direction="row" justifyContent={"space-between"} paddingTop={"1rem"}>
