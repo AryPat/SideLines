@@ -15,6 +15,8 @@ import {
   Badge,
   Box,
   Divider,
+  Spacer,
+  Link,
 } from "@chakra-ui/react";
 
 const members = {
@@ -57,17 +59,13 @@ function Groups({ selected, setSelected, isFetching }) {
 
   return (
     <Flex width="100%" height="100%" direction="column" fontFamily="Poppins">
-      <Text
-        as="b"
-        color="Black"
-        width="100%"
-        opacity="100"
-        paddingBottom="1rem"
-        textAlign="left"
-        fontSize="lg"
-      >
-        The Groups
-      </Text>
+      <HStack width="100%" alignItems={"center"} justifyContent={"flex-start"}>
+        <Text as="b" fontFamily="Poppins" fontSize={"2xl"}>
+          SideLines
+        </Text>
+
+        <Badge colorScheme="green">Beta 1.0</Badge>
+      </HStack>
       <Divider
         orientation="horizontal"
         marginBottom="1rem"
@@ -168,6 +166,41 @@ function Groups({ selected, setSelected, isFetching }) {
           ))}
         </Accordion>
       </Box>
+      <Divider
+        orientation="horizontal"
+        border="1px solid"
+        color="black"
+        marginTop={"1rem"}
+        marginBottom={"0.4rem"}
+      />
+      <Flex
+        width="100%"
+        alignItems={"center"}
+        justifyContent={"space-between"}
+      >
+        <Spacer></Spacer>
+        <VStack spacing={0}>
+          <Link href="https://www.buymeacoffee.com/arypat" isExternal>
+            <Text
+              as="b"
+              fontFamily="Poppins"
+              fontSize={"sm"}
+              textAlign={"right"}
+              width="100%"
+            >
+              ☕ Buy me a Coffee
+            </Text>
+          </Link>
+          <Text
+            fontFamily="Poppins"
+            fontSize={"10px"}
+            textAlign={"right"}
+            width="100%"
+          >
+            if you like what you 👀
+          </Text>
+        </VStack>
+      </Flex>
     </Flex>
   );
 }
