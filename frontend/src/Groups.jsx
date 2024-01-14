@@ -22,7 +22,7 @@ import {
 const members = {
   Sidemen: {
     Vikk: "https://bit.ly/ryan-florence",
-    Ksi: "https://bit.ly/ryan-florence",
+    KSI: "https://bit.ly/ryan-florence",
     Simon: "https://bit.ly/ryan-florence",
     Harry: "https://bit.ly/ryan-florence",
     Tobi: "https://bit.ly/ryan-florence",

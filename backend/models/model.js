@@ -19,10 +19,6 @@ const Line = sequelize.define("data", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  speakee_age: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
   pickup_line: {
     type: DataTypes.STRING,
     allowNull: false,
