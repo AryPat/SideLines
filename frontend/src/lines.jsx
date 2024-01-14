@@ -27,9 +27,12 @@ import {
   Spacer,
   Center,
   VStack,
+  useBoolean,
+  Image,
 } from "@chakra-ui/react";
 
 import { ViewIcon, ExternalLinkIcon, StarIcon } from "@chakra-ui/icons";
+import { getGirlInfo, getGirlPhoto } from "./people.js";
 
 const getSeconds = (time) => {
   const [minutes, seconds] = time.split(":");
@@ -101,12 +104,12 @@ const SkeletonLines = () => {
   );
 };
 
-const AvatarPopOver = ({ name, avatarProp }) => {
+const AvatarPopOver = ({ title, name, avatarProp }) => {
   return (
     <Popover placement="right-start">
       <PopoverTrigger>
         <Avatar
-          {...avatarProp(name)}
+          {...avatarProp(name, getGirlPhoto(title, name))}
           _hover={{
             cursor: "pointer",
           }}
@@ -124,37 +127,53 @@ const AvatarPopOver = ({ name, avatarProp }) => {
         >
           <Flex flex="1">
             <Text fontFamily="Poppins" fontSize="sm" as="b">
-              {name}, 25
+              {name}, {getGirlInfo(title, name)["age"]}
             </Text>
             <Spacer></Spacer>
             <Text fontFamily="Poppins" fontSize="sm" as="b">
-              Stoke
+              {getGirlInfo(title, name)["location"]}
             </Text>
           </Flex>
         </PopoverHeader>
         <PopoverArrow />
         <PopoverBody>
-          <HStack justify="center" align="center">
-            <Avatar size="sm" src="./src/assets/insta.png"></Avatar>
-            <Link
-              href={"https://youtu.be/aAOC71qqXxM?si=YGLpMbd0rY46zq3r&t="}
-              isExternal
+          <VStack>
+            <Image
+              borderRadius="0.5rem"
+              width={"70%"}
+              src={getGirlPhoto(title, name)}
+            />
+
+            <HStack
+              direction="row"
+              justifyContent={"center"}
+              alignItems={"center"}
             >
-              <Text fontFamily="Poppins" fontSize="sm" as="b">
-                @insta_name
-              </Text>
-            </Link>
-          </HStack>
+              <Avatar size="sm" src="./src/assets/insta.png"></Avatar>
+              <Link
+                href={`https://www.instagram.com/${
+                  getGirlInfo(title, name)["instagram"]
+                }`}
+                isExternal
+              >
+                <Text fontFamily="Poppins" fontSize="sm" as="b">
+                  @{getGirlInfo(title, name)["instagram"]}
+                </Text>
+              </Link>
+            </HStack>
+          </VStack>
         </PopoverBody>
       </PopoverContent>
     </Popover>
   );
 };
 
-const LineResult = ({ speaker, speakee, pickUpLine, result }) => {
+const LineResult = ({ title, speaker, speakee, pickUpLine, result }) => {
+  const [flag, setFlag] = useBoolean();
+
   let resultColor = "";
 
-  const avatarProp = (name) => {
+  const avatarProp = (name, photo) => {
     switch (result) {
       case "Yes":
         resultColor = "#006400;";
@@ -165,10 +184,9 @@ const LineResult = ({ speaker, speakee, pickUpLine, result }) => {
       default:
         resultColor = "grey";
     }
-
     return {
       name: name,
-      src: "https://google.ca",
+      src: photo,
       borderColor: resultColor,
       borderWidth: "3px",
     };
@@ -176,7 +194,7 @@ const LineResult = ({ speaker, speakee, pickUpLine, result }) => {
 
   return (
     <>
-      <Avatar {...avatarProp(speaker)} />
+      <Avatar {...avatarProp(speaker, "")} />
       <Text
         fontFamily="Poppins"
         fontSize="sm"
@@ -187,7 +205,7 @@ const LineResult = ({ speaker, speakee, pickUpLine, result }) => {
       >
         &quot;{pickUpLine}&quot;
       </Text>
-      <AvatarPopOver name={speakee} avatarProp={avatarProp} />
+      <AvatarPopOver title={title} name={speakee} avatarProp={avatarProp} />
     </>
   );
 };
@@ -239,6 +257,7 @@ const PickUpLine = ({ PickUplineInfo, order }) => {
             speakee={PickUplineInfo["speakee"]}
             pickUpLine={PickUplineInfo["pickup_line"]}
             result={PickUplineInfo["result"]}
+            title={PickUplineInfo["video_title"]}
           ></LineResult>
         </Flex>
         <Flex justifyContent="space-between" padding="0.3rem">
