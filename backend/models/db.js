@@ -1,16 +1,13 @@
 const { Sequelize } = require("sequelize");
-
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-}
+require("dotenv").config();
 
 const sequelize = new Sequelize(
-  process.env.DATABASE_NAME,
-  "mysql",
-  process.env.PASSWORD,
+  process.env.LOCAL_DATABASE_NAME || process.env.PROD_DATABASE_NAME,
+  process.env.LOCAL_USER || process.env.PROD_USER,
+  process.env.LOCAL_PASSWORD || process.env.PROD_PASSWORD,
   {
-    host: process.env.HOST,
-    port: process.env.DATABASE_PORT,
+    host: process.env.LOCAL_HOST || process.env.PROD_HOST,
+    port: process.env.LOCAL_DATABASE_PORT || process.env.PROD_DATABASE_PORT,
     dialect: "mysql",
     define: {
       timestamps: false,
