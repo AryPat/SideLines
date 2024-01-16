@@ -65,13 +65,13 @@ const YoutubeModel = ({ PickUplineInfo }) => {
             <iframe
               width="100%"
               height="500px"
-              src={`https://www.youtube.com/embed/aAOC71qqXxM?start=${getSeconds(
+              src={`https://www.youtube-nocookie.com/embed/aAOC71qqXxM?start=${getSeconds(
                 PickUplineInfo["start_time"]
               )}&end=${getSeconds(PickUplineInfo["end_time"])}`}
               allowFullScreen
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             ></iframe>
           </ModalBody>
-
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
@@ -239,12 +239,6 @@ const PickUpLine = ({ PickUplineInfo, order }) => {
             #{order}
           </Text>
           <HStack>
-            <StarIcon
-              cursor="not-allowed"
-              _hover={{
-                color: "yellow.600",
-              }}
-            ></StarIcon>
             <YoutubeModel PickUplineInfo={PickUplineInfo} />
             <Link
               href={
@@ -256,7 +250,7 @@ const PickUpLine = ({ PickUplineInfo, order }) => {
                 color: "blue.500",
               }}
             >
-              <ExternalLinkIcon />
+              <ExternalLinkIcon transform={"translateY(-3px)"} />
             </Link>
           </HStack>
         </Flex>

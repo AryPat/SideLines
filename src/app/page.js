@@ -95,8 +95,7 @@ export default function Home() {
           height="100%"
           width={["100%", "100%", "100%", "30%", "30%", "30%"]}
           backgroundColor="rgb(255, 255, 255, 0.3)"
-          borderTopRightRadius="0.5rem"
-          borderBottomRightRadius="0.5rem"
+          borderRadius={"0.5rem"}
           flexDirection="column"
           padding="1rem"
           boxShadow="dark-lg"
@@ -121,8 +120,7 @@ export default function Home() {
         >
           <AccordionItem
             backgroundColor="rgb(255, 255, 255, 0.3)"
-            borderTopLeftRadius="0.5rem"
-            borderBottomLeftRadius="0.5rem"
+            borderRadius={"0.5rem"}
             boxShadow="dark-lg"
             borderWidth="1px"
             marginTop={["1rem", "1rem", "1rem", "0rem", "0rem", "0rem"]}
