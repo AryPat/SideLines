@@ -45,8 +45,13 @@ function Groups({ selected, setSelected, isFetching }) {
         border="1px solid"
         color="black"
       />
-      <Box overflow="auto" paddingRight={"0.3rem"}>
-        <Box height="100%">
+      <Box
+        overflow="auto"
+        height="100%"
+        paddingRight={"0.3rem"}
+        paddingLeft={"0.3rem"}
+      >
+        <Box height="90%">
           <Accordion allowToggle width="100%" borderColor="transparent">
             {Object.entries(groups).map((key) => (
               <AccordionItem key={key[0]}>
@@ -148,6 +153,7 @@ function Groups({ selected, setSelected, isFetching }) {
           </Accordion>
         </Box>
       </Box>
+
       <Divider
         orientation="horizontal"
         border="1px solid"
