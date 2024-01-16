@@ -288,7 +288,7 @@ const PickUpLine = ({ PickUplineInfo, order }) => {
 
 function Lines({ isFetching, isLoading, data, isSuccess, page, pageSize }) {
   const commonGridProps = {
-    templateColumns: "repeat(2, 1fr)",
+    templateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
     gap: 4,
     height: "100%",
     width: "100%",
