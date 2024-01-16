@@ -3,12 +3,23 @@ const { sequelize, connectDB } = require("../../../models/db.js");
 const { Line, syncDB } = require("../../../models/model.js");
 
 export async function POST(req) {
-  req = await req.json();
+  try {
+    await connectDB();
+    await syncDB();
 
-  const data = req.data ? await Line.findAll(req.data) : await Line.findAll();
+    req = await req.json();
 
-  return NextResponse.json({
-    count: data.length,
-    result: data,
-  });
+    const data = req.data
+      ? await Line.findAll(req.data)
+      : await Line.findAll();
+
+    return NextResponse.json({
+      count: data.length,
+      result: data,
+    });
+  } catch (err) {
+    NextResponse.json({
+      error: toString(err),
+    });
+  }
 }
