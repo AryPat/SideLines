@@ -141,6 +141,8 @@ export default function Home() {
               data={data}
               isSuccess={isSuccess}
               refetch={refetch}
+              page={pageIndex}
+              pageSize={pageSize}
             ></Lines>
           </AccordionItem>
 

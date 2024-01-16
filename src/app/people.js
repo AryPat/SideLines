@@ -149,12 +149,126 @@ const girls = {
   },
 };
 
-const path = "./pictures/girls/one";
+const groups = {
+  sidemen: {
+    Josh: {
+      age: "old",
+      location: "Bermondsey, South London",
+      instagram: "zerkaa",
+      picture: "",
+    },
+    Simon: {
+      age: "young",
+      location: "Hertfordshire, England",
+      instagram: "miniminter",
+      picture: "",
+    },
+    Tobi: {
+      age: "young",
+      location: "Hackney, London",
+      instagram: "tobjizzle",
+      picture: "",
+    },
+    KSI: {
+      age: "grandpa",
+      location: "Watford, Hertfordshire",
+      instagram: "ksi",
+      picture: "",
+    },
+    Ethan: {
+      age: "young",
+      location: "London, United Kingdom",
+      instagram: "behzingagram",
+      picture: "",
+    },
+    Vikk: {
+      age: "young",
+      location: "Guildford, United Kingdom",
+      instagram: "vikkstagram",
+      picture: "",
+    },
+    Harry: {
+      age: "young",
+      location: "Guernsey",
+      instagram: "wroetoshaw",
+      picture: "",
+    },
+  },
+  troops: {
+    Stephen: {
+      age: "old",
+      location: "Bermondsey, South London",
+      instagram: "zerkaa",
+      picture: "",
+    },
+    Calfreezy: {
+      age: "young",
+      location: "Hertfordshire, England",
+      instagram: "miniminter",
+      picture: "",
+    },
+    Callux: {
+      age: "young",
+      location: "Hackney, London",
+      instagram: "tobjizzle",
+      picture: "",
+    },
+  },
+  betasquad: {
+    Chunks: {
+      age: "old",
+      location: "Bermondsey, South London",
+      instagram: "zerkaa",
+      picture: "",
+    },
+    Filly: {
+      age: "young",
+      location: "Hertfordshire, England",
+      instagram: "miniminter",
+      picture: "",
+    },
+  },
+  friends: {
+    Logan: {
+      age: "old",
+      location: "Bermondsey, South London",
+      instagram: "zerkaa",
+      picture: "",
+    },
+    Mike: {
+      age: "young",
+      location: "Hertfordshire, England",
+      instagram: "miniminter",
+      picture: "",
+    },
+    George: {
+      age: "young",
+      location: "Hackney, London",
+      instagram: "tobjizzle",
+      picture: "",
+    },
+    HarryP: {
+      age: "young",
+      location: "Hackney, London",
+      instagram: "tobjizzle",
+      picture: "",
+    },
+  },
+};
+
+const girl_path = "./pictures/girls/one";
 
 for (const groupName in girls) {
   for (const girlName in girls[groupName]) {
     const girl = girls[groupName][girlName];
-    girl.picture = `${path}/${girlName}.PNG`;
+    girl.picture = `${girl_path}/${girlName}.PNG`;
+  }
+}
+
+for (const groupName in groups) {
+  for (const guyName in groups[groupName]) {
+    const guy = groups[groupName][guyName];
+    guy.picture = `./pictures/${groupName}/${guyName}.PNG`;
   }
 }
 
@@ -166,4 +280,12 @@ const getGirlPhoto = (title, name) => {
   return girls[title]?.[name]?.picture;
 };
 
-export { getGirlInfo, getGirlPhoto };
+const getSpeakerPhoto = (group, name) => {
+  return groups[group][name]?.picture;
+};
+
+const getSpeakerInfo = (group, name) => {
+  return groups[group][name];
+};
+
+export { getGirlInfo, getGirlPhoto, getSpeakerPhoto, getSpeakerInfo, groups };

@@ -19,37 +19,10 @@ import {
   Link,
 } from "@chakra-ui/react";
 
-const members = {
-  Sidemen: {
-    Vikk: "https://bit.ly/ryan-florence",
-    KSI: "https://bit.ly/ryan-florence",
-    Simon: "https://bit.ly/ryan-florence",
-    Harry: "https://bit.ly/ryan-florence",
-    Tobi: "https://bit.ly/ryan-florence",
-    Ethan: "https://bit.ly/ryan-florence",
-    Josh: "https://bit.ly/ryan-florence",
-  },
-  Troops: {
-    Stephen: "https://bit.ly/ryan-florence",
-    Calfreezy: "https://bit.ly/ryan-florence",
-    Callux: "https://bit.ly/ryan-florence",
-  },
-  Betasquad: {
-    Chunks: "https://bit.ly/ryan-florence",
-    Filly: "https://bit.ly/ryan-florence",
-  },
-
-  Friends: {
-    Logan: "https://bit.ly/ryan-florence",
-    Mike: "https://bit.ly/ryan-florence",
-    George: "https://bit.ly/ryan-florence",
-    HarryP: "https://bit.ly/ryan-florence",
-  },
-};
+import { getSpeakerPhoto, groups } from "./people.js";
 
 function Groups({ selected, setSelected, isFetching }) {
   const handleSelect = (name) => {
-    // check if select is in selected if so remove it else add it
     if (selected.includes(name)) {
       setSelected(selected.filter((item) => item !== name));
       return;
@@ -74,7 +47,7 @@ function Groups({ selected, setSelected, isFetching }) {
       />
       <Box height="100%" overflow="auto">
         <Accordion allowToggle width="100%" borderColor="transparent">
-          {Object.entries(members).map((key) => (
+          {Object.entries(groups).map((key) => (
             <AccordionItem key={key[0]}>
               <AccordionButton
                 background="rgb(255, 255, 255, 0.4)"
@@ -93,20 +66,24 @@ function Groups({ selected, setSelected, isFetching }) {
                   textAlign="left"
                   fontFamily="Poppins"
                 >
-                  {key[0]}
+                  {key[0][0].toUpperCase() + key[0].slice(1)}
                 </Heading>
                 <AvatarGroup size="sm">
-                  {Object.entries(members[key[0]]).map(([name, src]) =>
-                    // if selected includes name then add a border thats hot pink
+                  {Object.entries(groups[key[0]]).map(([name, src]) =>
                     selected.includes(name) ? (
                       <Avatar
                         key={name}
                         name={name}
-                        src={src}
                         border="2px solid #ff5883"
+                        src={getSpeakerPhoto(key[0], name)}
                       />
                     ) : (
-                      <Avatar key={name} name={name} src={src} />
+                      <Avatar
+                        key={name}
+                        name={name}
+                        border="2px solid black"
+                        src={getSpeakerPhoto(key[0], name)}
+                      />
                     )
                   )}
                 </AvatarGroup>
@@ -115,47 +92,52 @@ function Groups({ selected, setSelected, isFetching }) {
 
               <AccordionPanel>
                 <VStack>
-                  {Object.entries(members[key[0]]).map(
-                    ([name, src], index) => (
+                  {Object.entries(groups[key[0]]).map(([name, src], index) => (
+                    <Flex
+                      key={key[0] + index}
+                      width="100%"
+                      backgroundColor="rgb(255, 255, 255, 0.4)"
+                      padding="0.4rem"
+                      borderRadius="0.5rem"
+                      justifyContent="center"
+                      borderWidth="1px"
+                      borderColor="transparent"
+                      _hover={{
+                        background: "rgb(255, 255, 255, 0.6)",
+                        cursor:
+                          isFetching || key[0] !== "sidemen"
+                            ? "not-allowed"
+                            : "pointer",
+                      }}
+                      disabled={key[0] !== "sidemen" || isFetching}
+                      onClick={() => {
+                        if (isFetching || key[0] !== "sidemen") return;
+                        handleSelect(name);
+                      }}
+                      boxShadow="base"
+                      userSelect="none"
+                    >
                       <Flex
-                        key={key[0] + index}
-                        width="100%"
-                        backgroundColor="rgb(255, 255, 255, 0.4)"
-                        padding="0.4rem"
-                        borderRadius="0.5rem"
-                        justifyContent="center"
-                        borderWidth="1px"
-                        borderColor="transparent"
-                        _hover={{
-                          background: "rgb(255, 255, 255, 0.6)",
-                          cursor: isFetching ? "not-allowed" : "pointer",
-                        }}
-                        disabled={isFetching}
-                        onClick={() => {
-                          if (isFetching) return;
-                          handleSelect(name);
-                        }}
-                        boxShadow="base"
+                        width="90%"
+                        justifyContent="space-between"
+                        align="center"
                       >
-                        <Flex
-                          width="90%"
-                          justifyContent="space-between"
-                          align="center"
-                        >
-                          <HStack>
-                            <Avatar name={name} src={src} />
-                            <Text fontFamily="Poppins">{name}</Text>
-                          </HStack>
+                        <HStack>
+                          <Avatar
+                            name={name}
+                            src={getSpeakerPhoto(key[0], name)}
+                          />
+                          <Text fontFamily="Poppins">{name}</Text>
+                        </HStack>
 
-                          {selected.includes(name) ? (
-                            <Badge colorScheme="purple">Selected</Badge>
-                          ) : (
-                            <Badge>Select</Badge>
-                          )}
-                        </Flex>
+                        {selected.includes(name) ? (
+                          <Badge colorScheme="purple">Selected</Badge>
+                        ) : (
+                          <Badge>Select</Badge>
+                        )}
                       </Flex>
-                    )
-                  )}
+                    </Flex>
+                  ))}
                 </VStack>
               </AccordionPanel>
             </AccordionItem>
