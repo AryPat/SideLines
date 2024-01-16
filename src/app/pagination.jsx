@@ -61,13 +61,12 @@ function Pagination({
             setPageSize(Number(e.target.value));
           }}
           fontFamily="Poppins"
-          fontSize="md"
           backgroundColor={"#e5cdde"}
           borderColor={"transparent"}
         >
           {[10, 20, 30].map((pageSize) => (
             <option key={pageSize} value={pageSize}>
-              <Text fontWeight="bold" as="span">
+              <Text>
                 Limit
                 {" " + pageSize}
               </Text>

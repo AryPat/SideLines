@@ -32,7 +32,12 @@ import {
 } from "@chakra-ui/react";
 
 import { ViewIcon, ExternalLinkIcon, StarIcon } from "@chakra-ui/icons";
-import { getGirlInfo, getGirlPhoto } from "./people.js";
+import {
+  getGirlInfo,
+  getGirlPhoto,
+  getSpeakerPhoto,
+  getSpeakerInfo,
+} from "./people.js";
 
 const getSeconds = (time) => {
   const [minutes, seconds] = time.split(":");
@@ -104,16 +109,17 @@ const SkeletonLines = () => {
   );
 };
 
-const AvatarPopOver = ({ title, name, avatarProp }) => {
+const AvatarPopOver = ({ title, name, avatarProp, photo, getInfo }) => {
   return (
     <Popover placement="right-start">
       <PopoverTrigger>
         <Avatar
-          {...avatarProp(name, getGirlPhoto(title, name))}
+          {...avatarProp(name)}
           _hover={{
             cursor: "pointer",
           }}
           userSelect="none"
+          src={photo}
         ></Avatar>
       </PopoverTrigger>
       <PopoverContent
@@ -127,37 +133,33 @@ const AvatarPopOver = ({ title, name, avatarProp }) => {
         >
           <Flex flex="1">
             <Text fontFamily="Poppins" fontSize="sm" as="b">
-              {name}, {getGirlInfo(title, name)["age"]}
+              {name}, {getInfo(title, name)["age"]}
             </Text>
             <Spacer></Spacer>
             <Text fontFamily="Poppins" fontSize="sm" as="b">
-              {getGirlInfo(title, name)["location"]}
+              {getInfo(title, name)["location"]}
             </Text>
           </Flex>
         </PopoverHeader>
         <PopoverArrow />
         <PopoverBody>
           <VStack>
-            <Image
-              borderRadius="0.5rem"
-              width={"70%"}
-              src={getGirlPhoto(title, name)}
-            />
+            <Image borderRadius="0.5rem" width={"70%"} src={photo} />
 
             <HStack
               direction="row"
               justifyContent={"center"}
               alignItems={"center"}
             >
-              <Avatar size="sm" src="./src/assets/insta.png"></Avatar>
+              <Avatar size="sm" src="./insta.png"></Avatar>
               <Link
                 href={`https://www.instagram.com/${
-                  getGirlInfo(title, name)["instagram"]
+                  getInfo(title, name)["instagram"]
                 }`}
                 isExternal
               >
                 <Text fontFamily="Poppins" fontSize="sm" as="b">
-                  @{getGirlInfo(title, name)["instagram"]}
+                  @{getInfo(title, name)["instagram"]}
                 </Text>
               </Link>
             </HStack>
@@ -169,11 +171,9 @@ const AvatarPopOver = ({ title, name, avatarProp }) => {
 };
 
 const LineResult = ({ title, speaker, speakee, pickUpLine, result }) => {
-  const [flag, setFlag] = useBoolean();
-
   let resultColor = "";
 
-  const avatarProp = (name, photo) => {
+  const avatarProp = (name) => {
     switch (result) {
       case "Yes":
         resultColor = "#006400;";
@@ -186,15 +186,21 @@ const LineResult = ({ title, speaker, speakee, pickUpLine, result }) => {
     }
     return {
       name: name,
-      src: photo,
       borderColor: resultColor,
       borderWidth: "3px",
+      boxShadow: `0 0 5px 2px ${resultColor}`,
     };
   };
 
   return (
     <>
-      <Avatar {...avatarProp(speaker, "")} />
+      <AvatarPopOver
+        title={"sidemen"}
+        name={speaker}
+        avatarProp={avatarProp}
+        photo={getSpeakerPhoto("sidemen", speaker)}
+        getInfo={getSpeakerInfo}
+      />
       <Text
         fontFamily="Poppins"
         fontSize="sm"
@@ -206,7 +212,13 @@ const LineResult = ({ title, speaker, speakee, pickUpLine, result }) => {
       >
         &quot;{pickUpLine}&quot;
       </Text>
-      <AvatarPopOver title={title} name={speakee} avatarProp={avatarProp} />
+      <AvatarPopOver
+        title={title}
+        name={speakee}
+        avatarProp={avatarProp}
+        photo={getGirlPhoto(title, speakee)}
+        getInfo={getGirlInfo}
+      />
     </>
   );
 };
@@ -224,7 +236,7 @@ const PickUpLine = ({ PickUplineInfo, order }) => {
       <Flex height="100%" direction="column" justifyContent="space-between">
         <Flex justifyContent="space-between" padding="0.3rem">
           <Text fontFamily="Poppins" fontSize="sm" as="b">
-            #{PickUplineInfo["id"]}
+            #{order}
           </Text>
           <HStack>
             <StarIcon
@@ -274,7 +286,7 @@ const PickUpLine = ({ PickUplineInfo, order }) => {
   );
 };
 
-function Lines({ isFetching, isLoading, data, isSuccess }) {
+function Lines({ isFetching, isLoading, data, isSuccess, page, pageSize }) {
   const commonGridProps = {
     templateColumns: "repeat(2, 1fr)",
     gap: 4,
@@ -314,7 +326,7 @@ function Lines({ isFetching, isLoading, data, isSuccess }) {
           <PickUpLine
             key={index}
             PickUplineInfo={line}
-            order={index + 1}
+            order={page * pageSize + index + 1}
           ></PickUpLine>
         ))}
       </Grid>
