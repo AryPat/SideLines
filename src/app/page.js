@@ -76,18 +76,24 @@ export default function Home() {
 
   return (
     <Flex
-      height="100vh" // 100% of the viewport height
-      width="100vw" // 100% of the viewport width
-      minH="100vh" // Minimum height to cover the viewport
-      minW="100vw" // Minimum width to cover the viewport
+      minH={["100vh", "100vh", "100vh", null, null, null]}
+      height={["100%", "100%", "100%", "100vh", "100vh", "100vh"]}
+      width="100vw"
       bgGradient="linear(to-br, #76dfff, #ffa8be)"
       align="center"
       justify="center"
+      paddingTop={["1rem", "1rem", "1rem", "0rem", "0rem", "0rem"]}
+      paddingBottom={["1rem", "1rem", "1rem", "0rem", "0rem", "0rem"]}
     >
-      <Flex height="90%" width="70%" justify="space-between">
+      <Flex
+        height="90%"
+        width={["95%", "90%", "90%", "90%", "80%", "70%"]}
+        justify="space-between"
+        flexDirection={["column", "column", "column", "row", "row", "row"]}
+      >
         <Flex
           height="100%"
-          width="30%"
+          width={["100%", "100%", "100%", "30%", "30%", "30%"]}
           backgroundColor="rgb(255, 255, 255, 0.3)"
           borderTopRightRadius="0.5rem"
           borderBottomRightRadius="0.5rem"
@@ -106,7 +112,7 @@ export default function Home() {
 
         <Accordion
           height="100%"
-          width="68%"
+          width={["100%", "100%", "100%", "68%", "68%", "68%"]}
           allowToggle
           display="flex"
           flexDirection="column"
@@ -119,6 +125,7 @@ export default function Home() {
             borderBottomLeftRadius="0.5rem"
             boxShadow="dark-lg"
             borderWidth="1px"
+            marginTop={["1rem", "1rem", "1rem", "0rem", "0rem", "0rem"]}
           >
             <Filter />
           </AccordionItem>

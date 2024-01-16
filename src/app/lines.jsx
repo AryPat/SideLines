@@ -141,7 +141,7 @@ const AvatarPopOver = ({ title, name, avatarProp, photo, getInfo }) => {
             </Text>
           </Flex>
         </PopoverHeader>
-        <PopoverArrow />
+        <PopoverArrow backgroundColor="#ececec" />
         <PopoverBody>
           <VStack>
             <Image borderRadius="0.5rem" width={"70%"} src={photo} />
